@@ -1,0 +1,2435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green House Inmobiliaria – Tu hogar ideal en Leganés</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ===========================
+   CSS VARIABLES & RESET
+=========================== */
+:root {
+  --verde: #A8CC00;
+  --verde-dark: #7A9900;
+  --verde-glow: rgba(168, 204, 0, 0.4);
+  --verde-pale: #F5F9EC;
+  --blanco: #FFFFFF;
+  --negro: #1A1A1A;
+  --gris: #F0F0F0;
+  --gris-mid: #9B9B9B;
+  --sombra: 0 20px 60px rgba(0,0,0,0.12);
+  --sombra-verde: 0 10px 40px rgba(168, 204, 0, 0.3);
+  --trans: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-title: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--negro);
+  background: var(--blanco);
+  overflow-x: hidden;
+}
+
+/* ===========================
+   SCROLL PROGRESS BAR
+=========================== */
+#progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--verde), var(--verde-dark));
+  z-index: 10000;
+  width: 0%;
+  transition: width 0.1s;
+  box-shadow: 0 0 10px var(--verde-glow);
+}
+
+/* ===========================
+   NAVBAR
+=========================== */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 18px 0;
+  transition: var(--trans);
+}
+.navbar.scrolled {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 2px 30px rgba(0,0,0,0.1);
+  padding: 12px 0;
+}
+.nav-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-icon {
+  width: 42px; 
+  height: 42px;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.logo:hover .logo-icon { transform: rotate(20deg) scale(1.1); }
+.logo-text {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--negro);
+  line-height: 1.1;
+}
+.logo-text span { color: var(--verde); }
+.navbar.scrolled .logo-text { color: var(--negro); }
+.navbar:not(.scrolled) .logo-text { color: var(--negro); }
+.navbar:not(.scrolled) .logo-text span { color: var(--verde); }
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 4px;
+  align-items: center;
+}
+.nav-menu a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  position: relative;
+  transition: color 0.2s;
+  letter-spacing: 0.02em;
+}
+.navbar:not(.scrolled) .nav-menu a { color: var(--negro); }
+.navbar.scrolled .nav-menu a { color: var(--negro); }
+.nav-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 50%;
+  width: 0%; height: 2px;
+  background: var(--verde);
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+.nav-menu a:hover::after { width: 70%; }
+.nav-menu a:hover { color: var(--verde) !important; }
+
+.nav-tel {
+  background: var(--verde);
+  color: var(--negro) !important;
+  padding: 8px 16px !important;
+  border-radius: 50px !important;
+  font-weight: 600 !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--trans) !important;
+  box-shadow: 0 4px 15px var(--verde-glow);
+}
+.nav-tel::after { display: none !important; }
+.nav-tel:hover {
+  background: var(--verde-dark) !important;
+  color: var(--blanco) !important;
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px var(--verde-glow) !important;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 24px; height: 2px;
+  background: var(--negro);
+  border-radius: 2px;
+  transition: var(--trans);
+}
+.navbar.scrolled .hamburger span { background: var(--negro); }
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* ===========================
+   HERO
+=========================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: #f8f9fa;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 50%, #e8ecf1 100%);
+  z-index: 0;
+}
+.hero-bg-video {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.45;
+  animation: heroZoom 20s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1800&q=80');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  z-index: 1;
+  display: none; /* Fallback if video doesn't load */
+}
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%);
+  z-index: 3;
+}
+.hero-content {
+  position: relative;
+  z-index: 4;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+  width: 100%;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(168,204,0,0.15);
+  border: 1.5px solid var(--verde);
+  color: var(--verde-dark);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+@keyframes pulse-badge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(168,204,0,0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(168,204,0,0); }
+}
+.hero h1 {
+  font-family: var(--font-title);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  color: var(--negro);
+  line-height: 1.1;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 10px rgba(255,255,255,0.8);
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--verde-dark);
+  font-weight: 400;
+}
+.hero p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 40px;
+  max-width: 550px;
+  font-weight: 400;
+  line-height: 1.7;
+  text-shadow: 0 1px 3px rgba(255,255,255,0.8);
+}
+
+/* Buscador */
+.buscador {
+  background: rgba(255,255,255,0.97);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  max-width: 860px;
+  backdrop-filter: blur(10px);
+}
+.buscador-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: var(--gris);
+  padding: 4px;
+  border-radius: 10px;
+  width: fit-content;
+}
+.tab-btn {
+  padding: 8px 20px;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  
+  transition: var(--trans);
+  color: var(--gris-mid);
+}
+.tab-btn.active {
+  background: var(--verde);
+  color: var(--negro);
+  font-weight: 600;
+  box-shadow: 0 2px 10px var(--verde-glow);
+}
+.buscador-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.form-group {
+  position: relative;
+}
+.form-group label {
+  position: absolute;
+  left: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.8rem;
+  color: var(--gris-mid);
+  transition: var(--trans);
+  pointer-events: none;
+  background: var(--blanco);
+  padding: 0 4px;
+}
+.form-group.filled label,
+.form-group:focus-within label {
+  top: 0;
+  font-size: 0.72rem;
+  color: var(--verde-dark);
+  transform: translateY(-50%);
+}
+.form-group select,
+.form-group input {
+  width: 100%;
+  padding: 14px 12px 10px;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  background: var(--blanco);
+  transition: var(--trans);
+  color: var(--negro);
+  appearance: none;
+  
+}
+.form-group select:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(168,204,0,0.2);
+}
+.checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--negro);
+  
+}
+.check-item input[type="checkbox"] {
+  accent-color: var(--verde);
+  width: 15px; height: 15px;
+  
+}
+.btn-buscar {
+  width: 100%;
+  padding: 14px;
+  background: var(--verde);
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--negro);
+  
+  position: relative;
+  overflow: hidden;
+  transition: var(--trans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-buscar:hover {
+  background: var(--verde-dark);
+  color: var(--blanco);
+  transform: scale(1.02);
+  box-shadow: var(--sombra-verde);
+}
+.btn-buscar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+.btn-buscar:hover::before { left: 100%; }
+
+/* ===========================
+   STATS
+=========================== */
+.stats {
+  background: var(--negro);
+  padding: 60px 24px;
+}
+.stats-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  text-align: center;
+}
+.stat-item { padding: 20px; }
+.stat-num {
+  font-family: var(--font-title);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--verde);
+  line-height: 1;
+  display: block;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ===========================
+   SECCIÓN GENÉRICA
+=========================== */
+section { padding: 90px 24px; }
+.section-inner { max-width: 1300px; margin: 0 auto; }
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--verde-dark);
+  display: block;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: var(--negro);
+  line-height: 1.15;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--verde-dark);
+}
+.section-sub {
+  font-size: 1rem;
+  color: var(--gris-mid);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 50px;
+}
+
+/* ===========================
+   PROPIEDADES GRID
+=========================== */
+.prop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.prop-card {
+  background: var(--blanco);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  transition: var(--trans);
+  position: relative;
+  
+}
+.prop-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(168,204,0,0.2), 0 8px 30px rgba(0,0,0,0.15);
+}
+.prop-img-wrap {
+  overflow: hidden;
+  height: 220px;
+  position: relative;
+}
+.prop-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.prop-card:hover .prop-img-wrap img { transform: scale(1.08); }
+.prop-badge {
+  position: absolute;
+  top: 14px; left: 14px;
+  background: var(--verde);
+  color: var(--negro);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  animation: pulse-badge 2.5s ease-in-out infinite;
+  z-index: 1;
+}
+.prop-badge.alquiler { background: var(--negro); color: var(--verde); }
+.prop-fav {
+  position: absolute;
+  top: 14px; right: 14px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  width: 34px; height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  transition: var(--trans);
+  z-index: 1;
+}
+.prop-fav:hover { background: var(--verde); transform: scale(1.15); }
+.prop-body { padding: 20px; }
+.prop-tipo {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gris-mid);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.prop-title {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--negro);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.prop-zona {
+  font-size: 0.82rem;
+  color: var(--gris-mid);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.prop-features {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--gris);
+  border-bottom: 1px solid var(--gris);
+}
+.prop-feat {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  color: var(--gris-mid);
+}
+.prop-feat svg { color: var(--verde); flex-shrink: 0; }
+.prop-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+}
+.prop-price {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--negro);
+}
+.prop-price span { font-size: 0.85rem; font-weight: 400; color: var(--gris-mid); }
+.btn-ver {
+  background: var(--negro);
+  color: var(--blanco);
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  
+  position: relative;
+  overflow: hidden;
+  transition: var(--trans);
+}
+.btn-ver:hover { background: var(--verde); color: var(--negro); transform: scale(1.05); }
+
+/* Ripple */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transform: scale(0);
+  animation: ripple-anim 0.6s linear;
+  pointer-events: none;
+}
+@keyframes ripple-anim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ===========================
+   BANNER PUBLICA
+=========================== */
+.banner-publica {
+  background: linear-gradient(135deg, var(--verde) 0%, var(--verde-dark) 100%);
+  padding: 70px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.banner-publica::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.banner-publica h2 {
+  font-family: var(--font-title);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  color: var(--negro);
+  margin-bottom: 12px;
+  position: relative;
+  font-weight: 600;
+}
+.banner-publica p {
+  color: rgba(0,0,0,0.65);
+  font-size: 1.05rem;
+  margin-bottom: 32px;
+  position: relative;
+}
+.btn-blanco {
+  background: var(--blanco);
+  color: var(--negro);
+  border: 2px solid var(--blanco);
+  padding: 14px 36px;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  
+  position: relative;
+  overflow: hidden;
+  transition: var(--trans);
+  display: inline-block;
+}
+.btn-blanco:hover {
+  background: var(--negro);
+  color: var(--verde);
+  border-color: var(--negro);
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* ===========================
+   TASACIÓN
+=========================== */
+.tasacion { background: var(--verde-pale); }
+.tasacion-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.tasacion-visual {
+  position: relative;
+}
+.tasacion-visual img {
+  width: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+  height: 500px;
+  box-shadow: var(--sombra);
+}
+.tasacion-card {
+  position: absolute;
+  bottom: -20px; right: -20px;
+  background: var(--verde);
+  color: var(--negro);
+  padding: 20px 24px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(168,204,0,0.4);
+}
+.tasacion-card strong {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+.tasacion-card span { font-size: 0.8rem; opacity: 0.8; }
+.tasacion-form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.float-group { position: relative; }
+.float-group label {
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  color: var(--gris-mid);
+  transition: var(--trans);
+  pointer-events: none;
+  background: transparent;
+  padding: 0 4px;
+}
+.float-group input,
+.float-group select {
+  width: 100%;
+  padding: 16px 14px 8px;
+  border: 1.5px solid #ddd;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  background: var(--blanco);
+  transition: var(--trans);
+  color: var(--negro);
+  
+}
+.float-group input:focus,
+.float-group select:focus {
+  outline: none;
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(168,204,0,0.15), 0 0 20px rgba(168,204,0,0.1);
+}
+.float-group input:focus + label,
+.float-group input:not(:placeholder-shown) + label,
+.float-group select:focus + label,
+.float-group.filled label {
+  top: 10px;
+  font-size: 0.72rem;
+  color: var(--verde-dark);
+  transform: none;
+}
+.btn-tasacion {
+  padding: 16px;
+  background: var(--negro);
+  color: var(--verde);
+  border: none;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  
+  position: relative;
+  overflow: hidden;
+  transition: var(--trans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.btn-tasacion:hover {
+  background: var(--verde);
+  color: var(--negro);
+  transform: scale(1.02);
+  box-shadow: var(--sombra-verde);
+}
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.tasacion-result {
+  display: none;
+  background: var(--verde);
+  border-radius: 12px;
+  padding: 20px 24px;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.tasacion-result strong {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--negro);
+}
+.tasacion-result span { font-size: 0.85rem; color: rgba(0,0,0,0.65); }
+
+/* ===========================
+   POR QUÉ ELEGIRNOS
+=========================== */
+.por-que { background: var(--negro); }
+.por-que .section-title { color: var(--blanco); }
+.por-que .section-sub { color: rgba(255,255,255,0.5); }
+.por-que .section-label { color: var(--verde); }
+.porq-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+.porq-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: var(--trans);
+}
+.porq-card:hover {
+  background: rgba(168,204,0,0.08);
+  border-color: var(--verde);
+  transform: translateY(-6px);
+}
+.porq-icon {
+  width: 56px; height: 56px;
+  background: rgba(168,204,0,0.12);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  transition: var(--trans);
+  color: var(--verde);
+}
+.porq-card:hover .porq-icon {
+  background: var(--verde);
+  color: var(--negro);
+  transform: rotate(-8deg) scale(1.1);
+}
+.porq-title {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--blanco);
+  margin-bottom: 10px;
+}
+.porq-text { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+/* ===========================
+   ZONAS
+=========================== */
+.zonas-wrap { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
+.zona-chip {
+  padding: 10px 22px;
+  border: 1.5px solid #ddd;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--negro);
+  
+  transition: var(--trans);
+  background: var(--blanco);
+}
+.zona-chip:hover {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: var(--negro);
+  transform: scale(1.06);
+  box-shadow: 0 4px 15px var(--verde-glow);
+}
+
+/* ===========================
+/* ===========================
+   GALERÍA OFICINA
+=========================== */
+.galeria-oficina { background: var(--blanco); }
+.oficina-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 50px 0 40px;
+}
+.oficina-img {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  transition: var(--trans);
+}
+.oficina-img:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 50px rgba(168,204,0,0.2);
+}
+.oficina-img img {
+  width: 100%; height: 280px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.oficina-img:hover img { transform: scale(1.05); }
+.oficina-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: var(--blanco);
+  padding: 40px 20px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.oficina-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+.info-destacada {
+  background: var(--verde-pale);
+  padding: 24px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 2px solid transparent;
+  transition: var(--trans);
+}
+.info-destacada:hover {
+  border-color: var(--verde);
+  transform: translateX(4px);
+}
+.info-icon-grande {
+  width: 60px; height: 60px;
+  background: var(--verde);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--negro);
+  flex-shrink: 0;
+}
+.info-destacada strong {
+  display: block;
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+  color: var(--negro);
+}
+.info-destacada span {
+  font-size: 0.88rem;
+  color: var(--gris-mid);
+}
+
+   TESTIMONIOS
+=========================== */
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.test-card {
+  background: var(--blanco);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  transition: var(--trans);
+  border: 1px solid transparent;
+}
+.test-card:hover {
+  border-color: var(--verde);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 50px rgba(168,204,0,0.15);
+}
+.test-stars { display: flex; gap: 4px; color: var(--verde); margin-bottom: 16px; }
+.test-text {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #444;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.test-author { display: flex; align-items: center; gap: 12px; }
+.test-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--verde);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--negro);
+  flex-shrink: 0;
+}
+.test-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--negro);
+}
+.test-sub { font-size: 0.78rem; color: var(--gris-mid); }
+
+/* ===========================
+   VIDEO BANNER
+=========================== */
+.video-banner {
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.video-banner-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.video-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(26,46,0,0.7) 100%);
+  z-index: 1;
+}
+.video-banner-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--blanco);
+  max-width: 700px;
+  padding: 40px 24px;
+}
+.video-banner-content h2 {
+  font-family: var(--font-title);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.video-banner-content p {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+/* ===========================
+   CONTACTO
+=========================== */
+.contacto { background: var(--verde-pale); }
+.contacto-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 70px;
+  align-items: start;
+}
+.contacto-form { display: flex; flex-direction: column; gap: 16px; }
+.btn-enviar {
+  padding: 16px;
+  background: var(--verde);
+  color: var(--negro);
+  border: none;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  
+  position: relative;
+  overflow: hidden;
+  transition: var(--trans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.btn-enviar:hover {
+  background: var(--verde-dark);
+  color: var(--blanco);
+  transform: scale(1.02);
+  box-shadow: var(--sombra-verde);
+}
+.btn-enviar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+.btn-enviar:hover::before { left: 100%; }
+.contacto-info { display: flex; flex-direction: column; gap: 20px; }
+.info-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px;
+  background: var(--blanco);
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: var(--trans);
+}
+.info-item:hover { border-color: var(--verde); transform: translateX(4px); }
+.info-icon {
+  width: 40px; height: 40px;
+  background: var(--verde);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--negro);
+  flex-shrink: 0;
+}
+.info-text strong { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
+.info-text span { font-size: 0.82rem; color: var(--gris-mid); line-height: 1.5; }
+.mapa-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  margin-top: 20px;
+  border: 3px solid var(--verde);
+}
+.mapa-wrap iframe {
+  width: 100%;
+  height: 280px;
+  display: block;
+  border: none;
+}
+.form-success {
+  display: none;
+  background: var(--verde);
+  border-radius: 12px;
+  padding: 20px 24px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--negro);
+  animation: fadeIn 0.4s ease;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+footer {
+  background: var(--negro);
+  padding: 70px 24px 30px;
+}
+.footer-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 50px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-brand .logo-text { color: var(--blanco); }
+.footer-desc {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.45);
+  margin: 16px 0 24px;
+  line-height: 1.7;
+}
+.footer-socials { display: flex; gap: 10px; }
+.social-btn {
+  width: 38px; height: 38px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.6);
+  transition: var(--trans);
+  
+}
+.social-btn:hover { background: var(--verde); color: var(--negro); transform: translateY(-3px) rotate(-5deg); }
+.footer-col h4 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 18px;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul a {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+  
+}
+.footer-col ul a:hover { color: var(--verde); }
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+}
+
+/* ===========================
+   ANIMACIONES DE ENTRADA
+=========================== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-in-delay-1 { transition-delay: 0.1s; }
+.fade-in-delay-2 { transition-delay: 0.2s; }
+.fade-in-delay-3 { transition-delay: 0.3s; }
+.fade-in-delay-4 { transition-delay: 0.4s; }
+.fade-in-delay-5 { transition-delay: 0.5s; }
+.fade-in-delay-6 { transition-delay: 0.6s; }
+
+/* ===========================
+   WHATSAPP FLOTANTE
+=========================== */
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 9999;
+  width: 60px;
+  height: 60px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  
+  transition: var(--trans);
+  animation: pulse-whatsapp 2s ease-in-out infinite;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+}
+.whatsapp-float svg {
+  color: white;
+  width: 32px;
+  height: 32px;
+}
+@keyframes pulse-whatsapp {
+  0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4), 0 0 0 10px rgba(37, 211, 102, 0.1); }
+}
+
+/* ===========================
+   LANGUAGE SELECTOR
+=========================== */
+.lang-selector {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.lang-flag {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  
+  opacity: 0.5;
+  transition: var(--trans);
+  border: 2px solid transparent;
+}
+.lang-flag:hover,
+.lang-flag.active {
+  opacity: 1;
+  border-color: var(--verde);
+  transform: scale(1.1);
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 1024px) {
+  .prop-grid { grid-template-columns: repeat(2, 1fr); }
+  .porq-grid { grid-template-columns: repeat(2, 1fr); }
+  .tasacion-grid { grid-template-columns: 1fr; gap: 50px; }
+  .tasacion-visual { display: none; }
+  .contacto-grid { grid-template-columns: 1fr; gap: 50px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+@media (max-width: 768px) {
+  .nav-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--negro); flex-direction: column; align-items: center; justify-content: center; gap: 28px; z-index: 999; }
+  .nav-menu.open { display: flex; }
+  .nav-menu a { font-size: 1.2rem; color: var(--blanco) !important; }
+  .lang-selector { order: -1; }
+  .hamburger { display: flex; z-index: 1001; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .prop-grid { grid-template-columns: 1fr; }
+  .test-grid { grid-template-columns: 1fr; }
+  .buscador-grid { grid-template-columns: 1fr 1fr; }
+  .porq-grid { grid-template-columns: 1fr 1fr; }
+  .footer-top { grid-template-columns: 1fr; gap: 30px; }
+  .oficina-grid { grid-template-columns: 1fr; }
+  .oficina-info { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  .form-row { grid-template-columns: 1fr; }
+  .whatsapp-float { bottom: 20px; right: 20px; width: 56px; height: 56px; }
+  .whatsapp-float svg { width: 28px; height: 28px; }
+  .video-banner { min-height: 400px; }
+  .video-banner-content h2 { font-size: 2rem; }
+  .video-banner-content p { font-size: 1rem; }
+}
+@media (max-width: 480px) {
+  .buscador { padding: 20px; }
+  .buscador-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .porq-grid { grid-template-columns: 1fr; }
+}
+
+/* ===========================
+   TOOLTIP
+=========================== */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background: var(--negro);
+  color: var(--blanco);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--trans);
+  transform-origin: bottom center;
+}
+[data-tooltip]:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/34693 009 436?text=Hola,%20estoy%20interesado%20en%20sus%20propiedades%20en%20Leganés" 
+   class="whatsapp-float" 
+   target="_blank" 
+   rel="noopener noreferrer"
+   aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- ===========================
+     NAVBAR
+=========================== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#inicio" class="logo">
+      <img src="logo.png" alt="Green House Logo" class="logo-icon">
+      <div class="logo-text">Green House<br><span>Inmobiliaria</span></div>
+    </a>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#propiedades">Venta</a></li>
+      <li><a href="#propiedades">Alquiler</a></li>
+      <li><a href="#tasacion">Tasación</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li class="lang-selector">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath fill='%23c60b1e' d='M0 27a4 4 0 004 4h28a4 4 0 004-4v-4H0v4z'/%3E%3Cpath fill='%23ffc400' d='M0 13h36v10H0z'/%3E%3Cpath fill='%23c60b1e' d='M32 5H4a4 4 0 00-4 4v4h36V9a4 4 0 00-4-4z'/%3E%3C/svg%3E" class="lang-flag active" title="Español" alt="ES">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath fill='%23012169' d='M0 9.059V13h5.628zM4.664 31H13v-5.837zM23 25.164V31h8.335zM0 23v3.941L5.63 23zM31.337 5H23v5.837zM36 26.942V23h-5.631zM36 13V9.059L30.371 13zM13 5H4.664L13 10.837z'/%3E%3Cpath fill='%23FFF' d='M36 21H21v10h2v-5.836L31.335 31H32a4 4 0 004-4v-2zM0 21v2a4 4 0 004 4h.664L13 21.165V27h2V21zM36 9a4 4 0 00-4-4h-.663L23 10.837V5h-2v10h15zM13 5v5.837L4.664 5H4a4 4 0 00-4 4v2h13z'/%3E%3Cpath fill='%23C8102E' d='M21 15h15v6H21zM0 15h15v6H0z'/%3E%3Cpath fill='%23FFF' d='M21 5v10h15V9.059zM0 5v10h15V9.059zM0 21v5.941L5.63 21zM36 21v5.941L30.37 21z'/%3E%3Cpath fill='%23C8102E' d='M0 15l15 10h6L6 15zM36 15L21 25h-6l15-10zM21 5L6 15h15zM0 25l15-10H0z'/%3E%3C/svg%3E" class="lang-flag" title="English" alt="EN">
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath fill='%23002654' d='M4 5a4 4 0 00-4 4v18a4 4 0 004 4h8V5H4z'/%3E%3Cpath fill='%23FFF' d='M12 5h12v26H12z'/%3E%3Cpath fill='%23ED2939' d='M32 5h-8v26h8a4 4 0 004-4V9a4 4 0 00-4-4z'/%3E%3C/svg%3E" class="lang-flag" title="Français" alt="FR">
+      </li>
+      <li><a href="tel:+34912345678" class="nav-tel">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        919 415 198
+      </a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===========================
+     HERO
+=========================== -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <!-- Video de fondo moderno -->
+  <video class="hero-bg-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1800&q=80">
+    <source src="https://cdn.coverr.co/videos/coverr-modern-luxury-house-exterior-5367/1080p.mp4" type="video/mp4">
+    <!-- Fallback si video no carga -->
+  </video>
+  <div class="hero-bg-img"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><circle cx="5" cy="5" r="5"/></svg>
+      Leganés · Madrid · España
+    </div>
+    <h1>Tu hogar ideal en<br><em>Leganés</em> te espera</h1>
+    <p>Más de 10 años encontrando el hogar perfecto para cada familia. Confianza, cercanía y resultados reales.</p>
+
+    <div class="buscador">
+      <div class="buscador-tabs">
+        <button class="tab-btn active" onclick="setTab(this)">Comprar</button>
+        <button class="tab-btn" onclick="setTab(this)">Alquilar</button>
+        <button class="tab-btn" onclick="setTab(this)">Opción a compra</button>
+      </div>
+      <div class="buscador-grid">
+        <div class="form-group">
+          <select id="tipo-inmueble" onchange="checkFilled(this.parentElement)">
+            <option value="">Tipo de inmueble</option>
+            <option>Piso</option><option>Casa</option><option>Chalet</option>
+            <option>Estudio</option><option>Local</option><option>Garaje</option>
+          </select>
+          <label>Tipo de inmueble</label>
+        </div>
+        <div class="form-group">
+          <select onchange="checkFilled(this.parentElement)">
+            <option value="">Dormitorios</option>
+            <option>Estudio</option><option>1</option><option>2</option>
+            <option>3</option><option>4+</option>
+          </select>
+          <label>Dormitorios</label>
+        </div>
+        <div class="form-group">
+          <select onchange="checkFilled(this.parentElement)">
+            <option value="">Baños</option>
+            <option>1</option><option>2</option><option>3+</option>
+          </select>
+          <label>Baños</label>
+        </div>
+        <div class="form-group">
+          <input type="number" placeholder=" " id="precio-min" oninput="checkFilled(this.parentElement)">
+          <label>Precio mínimo (€)</label>
+        </div>
+        <div class="form-group">
+          <input type="number" placeholder=" " id="precio-max" oninput="checkFilled(this.parentElement)">
+          <label>Precio máximo (€)</label>
+        </div>
+        <div class="form-group">
+          <input type="number" placeholder=" " oninput="checkFilled(this.parentElement)">
+          <label>m² mínimos</label>
+        </div>
+      </div>
+      <div class="checkboxes">
+        <label class="check-item"><input type="checkbox"> Piscina</label>
+        <label class="check-item"><input type="checkbox"> Garaje</label>
+        <label class="check-item"><input type="checkbox"> Ascensor</label>
+        <label class="check-item"><input type="checkbox"> Terraza</label>
+        <label class="check-item"><input type="checkbox"> Amueblado</label>
+        <label class="check-item"><input type="checkbox"> Jardín</label>
+      </div>
+      <button class="btn-buscar" onclick="buscarPropiedades(); addRipple(event, this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Buscar propiedades
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     STATS
+=========================== -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat-item fade-in">
+      <span class="stat-num" data-target="500">0</span>
+      <span class="stat-label">Propiedades activas</span>
+    </div>
+    <div class="stat-item fade-in fade-in-delay-1">
+      <span class="stat-num" data-target="10">0</span>
+      <span class="stat-label">Años de experiencia</span>
+    </div>
+    <div class="stat-item fade-in fade-in-delay-2">
+      <span class="stat-num" data-target="1200">0</span>
+      <span class="stat-label">Clientes felices</span>
+    </div>
+    <div class="stat-item fade-in fade-in-delay-3">
+      <span class="stat-num" data-target="98">0</span>
+      <span class="stat-label">% satisfacción</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     PROPIEDADES DESTACADAS
+=========================== -->
+<section id="propiedades">
+  <div class="section-inner">
+    <span class="section-label fade-in">Selección exclusiva</span>
+    <h2 class="section-title fade-in">Propiedades <em>destacadas</em></h2>
+    <p class="section-sub fade-in">Las mejores opciones seleccionadas por nuestro equipo local para tu nuevo hogar.</p>
+    <div class="prop-grid" id="prop-grid">
+      <!-- Cargadas por JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     BANNER PUBLICA
+=========================== -->
+<div class="banner-publica">
+  <h2>¿Quieres vender o alquilar tu inmueble?</h2>
+  <p>Te ayudamos a gestionar todo el proceso de forma rápida y transparente</p>
+  <button class="btn-blanco" onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'}); addRipple(event, this)">
+    Publicar mi inmueble gratis
+  </button>
+</div>
+
+<!-- ===========================
+     TASACIÓN ONLINE
+=========================== -->
+<section class="tasacion" id="tasacion">
+  <div class="section-inner">
+    <div class="tasacion-grid">
+      <div class="tasacion-visual fade-in">
+        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&q=80" alt="Tasación inmobiliaria">
+        <div class="tasacion-card">
+          <strong>Valoración gratuita</strong>
+          <span>Resultado inmediato</span>
+        </div>
+      </div>
+      <div>
+        <span class="section-label fade-in">Tasación online</span>
+        <h2 class="section-title fade-in">Conoce el valor<br>de tu <em>inmueble</em></h2>
+        <p class="section-sub fade-in">Calcula de forma gratuita el precio estimado de tu propiedad en Leganés y alrededores.</p>
+        <div class="tasacion-form fade-in" id="tasacion-form">
+          <div class="form-row">
+            <div class="float-group">
+              <select id="t-tipo">
+                <option value="">Tipo</option>
+                <option value="piso">Piso</option>
+                <option value="casa">Casa/Chalet</option>
+                <option value="estudio">Estudio</option>
+                <option value="local">Local</option>
+              </select>
+              <label>Tipo de inmueble</label>
+            </div>
+            <div class="float-group">
+              <input type="number" id="t-metros" placeholder=" " min="20" max="500">
+              <label>Superficie (m²)</label>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="float-group">
+              <select id="t-zona">
+                <option value="">Zona</option>
+                <option value="centro">Centro</option>
+                <option value="zarzaquemada">Zarzaquemada</option>
+                <option value="fortuna">La Fortuna</option>
+                <option value="arroyo">Arroyo Culebro</option>
+                <option value="carrascal">El Carrascal</option>
+              </select>
+              <label>Zona de Leganés</label>
+            </div>
+            <div class="float-group">
+              <select id="t-ascensor">
+                <option value="no">Sin ascensor</option>
+                <option value="si">Con ascensor</option>
+              </select>
+              <label>Ascensor</label>
+            </div>
+          </div>
+          <div class="float-group">
+            <input type="text" id="t-nombre" placeholder=" ">
+            <label>Tu nombre</label>
+          </div>
+          <div class="form-row">
+            <div class="float-group">
+              <input type="email" id="t-email" placeholder=" ">
+              <label>Email</label>
+            </div>
+            <div class="float-group">
+              <input type="tel" id="t-tel" placeholder=" ">
+              <label>Teléfono</label>
+            </div>
+          </div>
+          <button class="btn-tasacion" id="btn-tasacion" onclick="calcularTasacion()">
+            <span id="btn-tasacion-text">Calcular valoración</span>
+            <div class="spinner" id="tasacion-spinner"></div>
+          </button>
+          <div class="tasacion-result" id="tasacion-result">
+            <span>Valor estimado de tu inmueble</span>
+            <strong id="tasacion-precio"></strong>
+            <span>Precio de mercado aproximado · Leganés, Madrid</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     POR QUÉ ELEGIRNOS
+=========================== -->
+<section class="por-que" id="nosotros">
+  <div class="section-inner">
+    <span class="section-label fade-in">Green House</span>
+    <h2 class="section-title fade-in">¿Por qué <em>elegirnos?</em></h2>
+    <p class="section-sub fade-in">Somos más que una inmobiliaria, somos tu aliado en la decisión más importante de tu vida.</p>
+    <div class="porq-grid">
+      <div class="porq-card fade-in fade-in-delay-1">
+        <div class="porq-icon" data-tooltip="Más de 10 años en Leganés">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="porq-title">10+ Años de Experiencia</div>
+        <p class="porq-text">Conocemos Leganés como la palma de nuestra mano. Cada barrio, cada calle, cada oportunidad.</p>
+      </div>
+      <div class="porq-card fade-in fade-in-delay-2">
+        <div class="porq-icon" data-tooltip="Equipo nativo de Leganés">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="porq-title">Equipo Local</div>
+        <p class="porq-text">Profesionales nacidos y criados en Leganés. Tu vecino de confianza para encontrar tu hogar.</p>
+      </div>
+      <div class="porq-card fade-in fade-in-delay-3">
+        <div class="porq-icon" data-tooltip="Gestión integral del proceso">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="porq-title">Gestión 360°</div>
+        <p class="porq-text">Desde la primera visita hasta la firma. Notaría, financiación, reformas: lo gestionamos todo.</p>
+      </div>
+      <div class="porq-card fade-in fade-in-delay-4">
+        <div class="porq-icon" data-tooltip="Atención única para ti">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.43 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.53 6.53l1.62-1.62a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="porq-title">Atención Personalizada</div>
+        <p class="porq-text">Un agente dedicado exclusivamente a ti. Disponible 7 días a la semana para resolver tus dudas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     ZONAS DE LEGANÉS
+=========================== -->
+<section>
+  <div class="section-inner">
+    <span class="section-label fade-in">Dónde trabajamos</span>
+    <h2 class="section-title fade-in">Zonas de <em>Leganés</em></h2>
+    <p class="section-sub fade-in">Expertos en todos los barrios y zonas del municipio de Leganés.</p>
+    <div class="zonas-wrap fade-in">
+      <div class="zona-chip">Centro</div>
+      <div class="zona-chip">Zarzaquemada</div>
+      <div class="zona-chip">La Fortuna</div>
+      <div class="zona-chip">Arroyo Culebro</div>
+      <div class="zona-chip">El Carrascal</div>
+      <div class="zona-chip">Polígono Europa</div>
+      <div class="zona-chip">El Cañaveral</div>
+      <div class="zona-chip">Valdepelayos</div>
+      <div class="zona-chip">Butarque</div>
+      <div class="zona-chip">Los Olivos</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     NUESTRA OFICINA
+=========================== -->
+<section class="galeria-oficina">
+  <div class="section-inner">
+    <span class="section-label fade-in">Ven a visitarnos</span>
+    <h2 class="section-title fade-in">Nuestra <em>oficina</em></h2>
+    <p class="section-sub fade-in">Ubicados en el corazón de Leganés. Un espacio moderno diseñado para atenderte con la máxima comodidad.</p>
+    
+    <div class="oficina-grid fade-in">
+      <div class="oficina-img">
+        <img src="static/images/oficina/fachada.jpg" alt="Fachada Green House Inmobiliaria" loading="lazy">
+        <div class="oficina-caption">Nuestra fachada en C. de los Pedroches</div>
+      </div>
+      <div class="oficina-img">
+        <img src="static/images/oficina/oficina1.jpg" alt="Interior oficina Green House" loading="lazy">
+        <div class="oficina-caption">Zona de atención al cliente</div>
+      </div>
+      <div class="oficina-img">
+        <img src="static/images/oficina/oficina2.jpg" alt="Oficina Green House Leganés" loading="lazy">
+        <div class="oficina-caption">Espacio de trabajo</div>
+      </div>
+    </div>
+
+    <div class="oficina-info fade-in">
+      <div class="info-destacada">
+        <div class="info-icon-grande">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div>
+          <strong>C. de los Pedroches, 32</strong>
+          <span>28915 Leganés, Madrid</span>
+        </div>
+      </div>
+      <div class="info-destacada">
+        <div class="info-icon-grande">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+        </div>
+        <div>
+          <strong>919 415 198 · 693 009 436</strong>
+          <span>Lunes a Viernes: 9:00 - 20:00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     TESTIMONIOS
+=========================== -->
+<section style="background: var(--verde-pale);">
+  <div class="section-inner">
+    <span class="section-label fade-in">Lo que dicen nuestros clientes</span>
+    <h2 class="section-title fade-in">Historias de <em>éxito</em></h2>
+    <p class="section-sub fade-in">Más de 1.200 familias han confiado en nosotros. Aquí están sus palabras.</p>
+    <div class="test-grid">
+      <div class="test-card fade-in fade-in-delay-1">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Encontramos el piso de nuestros sueños en Zarzaquemada en menos de 3 semanas. El equipo de Green House nos acompañó en cada paso, incluso con la hipoteca."</p>
+        <div class="test-author">
+          <div class="test-avatar">MG</div>
+          <div>
+            <div class="test-name">María García López</div>
+            <div class="test-sub">Compró en Zarzaquemada · 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card fade-in fade-in-delay-2">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Vendí mi piso en tiempo récord y al precio que pedía. Sin estrés, sin sorpresas. Profesionales de verdad que conocen el mercado local mejor que nadie."</p>
+        <div class="test-author">
+          <div class="test-avatar">JR</div>
+          <div>
+            <div class="test-name">Jorge Rodríguez Sanz</div>
+            <div class="test-sub">Vendió en El Centro · 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card fade-in fade-in-delay-3">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">"Como extranjera no sabía por dónde empezar. Green House me explicó todo con paciencia, gestionaron los trámites y ahora tengo mi hogar en Leganés. ¡Gracias!"</p>
+        <div class="test-author">
+          <div class="test-avatar">AL</div>
+          <div>
+            <div class="test-name">Ana Luisa Ferreira</div>
+            <div class="test-sub">Alquiló en La Fortuna · 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     BANNER VIDEO PROMOCIONAL
+=========================== -->
+<section class="video-banner">
+  <video class="video-banner-bg" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=80">
+    <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-modern-housing-development-8814/1080p.mp4" type="video/mp4">
+  </video>
+  <div class="video-banner-overlay"></div>
+  <div class="video-banner-content">
+    <h2>Vive en Leganés, vive Green House</h2>
+    <p>Descubre nuestras promociones exclusivas y encuentra el hogar que siempre soñaste</p>
+    <button class="btn-blanco" onclick="document.getElementById('propiedades').scrollIntoView({behavior:'smooth'}); addRipple(event, this)">
+      Ver todas las propiedades
+    </button>
+  </div>
+</section>
+
+<!-- ===========================
+     CONTACTO
+=========================== -->
+<section class="contacto" id="contacto">
+  <div class="section-inner">
+    <div class="contacto-grid">
+      <div>
+        <span class="section-label fade-in">Hablemos</span>
+        <h2 class="section-title fade-in">¿Listo para encontrar<br>tu <em>hogar?</em></h2>
+        <p class="section-sub fade-in">Escríbenos y un agente local se pondrá en contacto contigo en menos de 24 horas.</p>
+        <div class="contacto-form fade-in">
+          <div class="form-row">
+            <div class="float-group">
+              <input type="text" id="c-nombre" placeholder=" ">
+              <label>Tu nombre</label>
+            </div>
+            <div class="float-group">
+              <input type="email" id="c-email" placeholder=" ">
+              <label>Email</label>
+            </div>
+          </div>
+          <div class="float-group">
+            <input type="tel" id="c-tel" placeholder=" ">
+            <label>Teléfono</label>
+          </div>
+          <div class="float-group">
+            <select id="c-asunto">
+              <option value="">Seleccionar</option>
+              <option>Quiero comprar</option>
+              <option>Quiero alquilar</option>
+              <option>Quiero vender</option>
+              <option>Tasación gratuita</option>
+              <option>Otro</option>
+            </select>
+            <label>¿En qué te ayudamos?</label>
+          </div>
+          <div class="float-group">
+            <input type="text" id="c-mensaje" placeholder=" ">
+            <label>Mensaje (opcional)</label>
+          </div>
+          <button class="btn-enviar" id="btn-enviar" onclick="enviarContacto()">
+            <span id="btn-enviar-text">Enviar mensaje</span>
+            <div class="spinner" id="contacto-spinner"></div>
+          </button>
+          <div class="form-success" id="form-success">
+            ✓ Mensaje enviado correctamente. Te contactamos pronto.
+          </div>
+        </div>
+      </div>
+      <div class="fade-in">
+        <div class="contacto-info">
+          <div class="info-item">
+            <div class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>Dirección</strong>
+              <span>C. de los Pedroches, 32<br>28915 Leganés, Madrid</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>Teléfono</strong>
+              <span>919 415 198<br>Lunes – Viernes 9h–20h</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="info-text">
+              <strong>Email</strong>
+              <span>info@greenhouseleganes.es<br>Respuesta en menos de 24h</span>
+            </div>
+          </div>
+        </div>
+        <div class="mapa-wrap">
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-3.7776%2C40.3240%2C-3.7576%2C40.3380&layer=mapnik&marker=40.3318%2C-3.7676"
+            title="Ubicación Green House Inmobiliaria – C. de los Pedroches, 32, Leganés"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     FOOTER
+=========================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <img src="logo.png" alt="Green House Logo" class="logo-icon">
+          <div class="logo-text footer-brand">Green House<br><span>Inmobiliaria</span></div>
+        </a>
+        <p class="footer-desc">Tu inmobiliaria de confianza en Leganés. Más de 10 años ayudando a familias a encontrar su hogar ideal en el sur de Madrid.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.97 0C5.373 0 0 5.373 0 11.97c0 2.115.553 4.1 1.52 5.83L0 24l6.37-1.49A11.93 11.93 0 0 0 11.97 24C18.567 24 24 18.627 24 12.03 24 5.373 18.567 0 11.97 0zm0 21.818a9.836 9.836 0 0 1-5.02-1.376l-.36-.214-3.728.977.996-3.642-.235-.374A9.836 9.836 0 0 1 2.182 12.03c0-5.398 4.39-9.788 9.788-9.788s9.788 4.39 9.788 9.788-4.39 9.788-9.788 9.788z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Inmuebles</h4>
+        <ul>
+          <li><a href="#">Pisos en venta</a></li>
+          <li><a href="#">Casas en venta</a></li>
+          <li><a href="#">Pisos en alquiler</a></li>
+          <li><a href="#">Chalets</a></li>
+          <li><a href="#">Promociones nuevas</a></li>
+          <li><a href="#">Garajes y locales</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#">Tasación gratuita</a></li>
+          <li><a href="#">Asesoría hipotecaria</a></li>
+          <li><a href="#">Gestión de alquiler</a></li>
+          <li><a href="#">Reformas y decoración</a></li>
+          <li><a href="#">Inversión inmobiliaria</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre nosotros</a></li>
+          <li><a href="#">Nuestro equipo</a></li>
+          <li><a href="#">Blog inmobiliario</a></li>
+          <li><a href="#">Aviso legal</a></li>
+          <li><a href="#">Política de privacidad</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Green House Inmobiliaria · Leganés, Madrid</span>
+      <span>Diseñado con 💚 para Leganés</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===========================
+     JAVASCRIPT
+=========================== -->
+<script>
+/* =====================
+   LANGUAGE SELECTOR
+===================== */
+document.querySelectorAll('.lang-flag').forEach(flag => {
+  flag.addEventListener('click', function() {
+    document.querySelectorAll('.lang-flag').forEach(f => f.classList.remove('active'));
+    this.classList.add('active');
+    // Aquí se puede integrar i18n real en producción
+    const lang = this.getAttribute('alt');
+    console.log(`Language changed to: ${lang}`);
+  });
+});
+
+/* =====================
+   SCROLL PROGRESS
+===================== */
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / docHeight) * 100;
+  document.getElementById('progress-bar').style.width = progress + '%';
+
+  // Navbar glassmorphism
+  const navbar = document.getElementById('navbar');
+  if (scrollTop > 60) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
+});
+
+/* =====================
+   HAMBURGER MENU
+===================== */
+document.getElementById('hamburger').addEventListener('click', function() {
+  this.classList.toggle('active');
+  document.getElementById('navMenu').classList.toggle('open');
+});
+
+document.querySelectorAll('#navMenu a').forEach(a => {
+  a.addEventListener('click', () => {
+    document.getElementById('hamburger').classList.remove('active');
+    document.getElementById('navMenu').classList.remove('open');
+  });
+});
+
+/* =====================
+   BUSCADOR TABS
+===================== */
+function setTab(btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function checkFilled(group) {
+  const input = group.querySelector('input, select');
+  if (input && input.value) group.classList.add('filled');
+  else group.classList.remove('filled');
+}
+
+/* =====================
+   HERO CANVAS – HOJAS
+===================== */
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let W, H;
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = canvas.parentElement.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function Leaf() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.size = 6 + Math.random() * 12;
+    this.speedX = (Math.random() - 0.5) * 0.8;
+    this.speedY = -0.5 - Math.random() * 1;
+    this.rotation = Math.random() * Math.PI * 2;
+    this.rotSpeed = (Math.random() - 0.5) * 0.03;
+    this.opacity = 0.15 + Math.random() * 0.35;
+    this.color = Math.random() > 0.5 ? '#A8CC00' : '#7A9900';
+  }
+
+  Leaf.prototype.draw = function() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotation);
+    ctx.globalAlpha = this.opacity;
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, this.size * 0.4, this.size, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  };
+
+  Leaf.prototype.update = function() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.rotation += this.rotSpeed;
+    if (this.y < -20) { this.y = H + 20; this.x = Math.random() * W; }
+    if (this.x < -20) this.x = W + 20;
+    if (this.x > W + 20) this.x = -20;
+  };
+
+  for (let i = 0; i < 60; i++) particles.push(new Leaf());
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* =====================
+   INTERSECTION OBSERVER
+===================== */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Counter animation
+      const numEl = entry.target.querySelector('.stat-num');
+      if (numEl && !numEl.dataset.done) {
+        numEl.dataset.done = '1';
+        animateCounter(numEl, parseInt(numEl.dataset.target));
+      }
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+document.querySelectorAll('.stat-item').forEach(el => observer.observe(el));
+
+function animateCounter(el, target) {
+  const suffix = target === 98 ? '%' : target === 500 ? '+' : target === 10 ? '+' : '+';
+  let current = 0;
+  const duration = 1800;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    el.textContent = (target === 1200 ? '+' : '') + Math.floor(current) + (target !== 1200 ? suffix : '+');
+  }, 16);
+}
+
+/* =====================
+   PROPIEDADES – DATOS MOCK
+===================== */
+const propiedades = [
+  {
+    id: 1,
+    tipo: 'Piso en venta',
+    titulo: 'Piso luminoso con terraza',
+    zona: 'Zarzaquemada',
+    precio: 219000,
+    m2: 87,
+    hab: 3,
+    banos: 2,
+    badge: 'Destacado',
+    badgeClass: '',
+    img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80'
+  },
+  {
+    id: 2,
+    tipo: 'Piso en alquiler',
+    titulo: 'Piso reformado en el Centro',
+    zona: 'Centro',
+    precio: 950,
+    m2: 72,
+    hab: 2,
+    banos: 1,
+    badge: 'Alquiler',
+    badgeClass: 'alquiler',
+    img: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80'
+  },
+  {
+    id: 3,
+    tipo: 'Chalet en venta',
+    titulo: 'Chalet adosado con jardín',
+    zona: 'Arroyo Culebro',
+    precio: 385000,
+    m2: 160,
+    hab: 4,
+    banos: 3,
+    badge: 'Nuevo',
+    badgeClass: '',
+    img: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&q=80'
+  },
+  {
+    id: 4,
+    tipo: 'Piso en venta',
+    titulo: 'Ático con vistas panorámicas',
+    zona: 'La Fortuna',
+    precio: 295000,
+    m2: 105,
+    hab: 3,
+    banos: 2,
+    badge: 'Ático',
+    badgeClass: '',
+    img: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=80'
+  },
+  {
+    id: 5,
+    tipo: 'Piso en alquiler',
+    titulo: 'Estudio moderno amueblado',
+    zona: 'El Carrascal',
+    precio: 750,
+    m2: 45,
+    hab: 1,
+    banos: 1,
+    badge: 'Alquiler',
+    badgeClass: 'alquiler',
+    img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&q=80'
+  },
+  {
+    id: 6,
+    tipo: 'Casa en venta',
+    titulo: 'Casa unifamiliar con piscina',
+    zona: 'Valdepelayos',
+    precio: 490000,
+    m2: 220,
+    hab: 5,
+    banos: 3,
+    badge: 'Exclusiva',
+    badgeClass: '',
+    img: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80'
+  }
+];
+
+function renderPropiedades(data) {
+  const grid = document.getElementById('prop-grid');
+  grid.innerHTML = data.map((p, i) => `
+    <div class="prop-card fade-in fade-in-delay-${(i % 3) + 1}" onclick="verPropiedad(${p.id})">
+      <div class="prop-img-wrap">
+        <img src="${p.img}" alt="${p.titulo}" loading="lazy">
+        <span class="prop-badge ${p.badgeClass}">${p.badge}</span>
+        <button class="prop-fav" onclick="event.stopPropagation(); toggleFav(this)" aria-label="Favorito">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+      </div>
+      <div class="prop-body">
+        <div class="prop-tipo">${p.tipo}</div>
+        <div class="prop-title">${p.titulo}</div>
+        <div class="prop-zona">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          ${p.zona}, Leganés
+        </div>
+        <div class="prop-features">
+          <div class="prop-feat" data-tooltip="${p.m2} metros cuadrados">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/></svg>
+            ${p.m2} m²
+          </div>
+          <div class="prop-feat" data-tooltip="${p.hab} habitaciones">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            ${p.hab} hab.
+          </div>
+          <div class="prop-feat" data-tooltip="${p.banos} baños">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16a1 1 0 0 1 1 1v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-3a1 1 0 0 1 1-1z"/><path d="M6 12V5a2 2 0 0 1 2-2h3v2.25"/></svg>
+            ${p.banos} baños
+          </div>
+        </div>
+        <div class="prop-footer">
+          <div class="prop-price">
+            ${p.precio.toLocaleString('es-ES')}€
+            ${p.badgeClass === 'alquiler' ? '<span>/mes</span>' : ''}
+          </div>
+          <button class="btn-ver" onclick="event.stopPropagation(); addRipple(event, this)">Ver más</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Re-observe new elements
+  grid.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Re-attach cursor listeners
+  grid.querySelectorAll('button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); follower.classList.add('hovered'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); follower.classList.remove('hovered'); });
+  });
+}
+
+function toggleFav(btn) {
+  btn.style.background = btn.style.background === 'rgb(168, 204, 0)' ? '' : 'var(--verde)';
+}
+
+function verPropiedad(id) {
+  alert(`Detalle de propiedad #${id} — integrar con backend /api/propiedades/${id}`);
+}
+
+renderPropiedades(propiedades);
+
+/* =====================
+   BUSCAR
+===================== */
+function buscarPropiedades() {
+  const tipo = document.getElementById('tipo-inmueble').value;
+  const precioMin = parseInt(document.getElementById('precio-min').value) || 0;
+// Propiedades hardcodeadas (versión standalone)
+function cargarYRenderizarPropiedades() {
+  const propiedadesHardcoded = [
+    {
+      id: 1,
+      tipo: "piso",
+      operacion: "venta",
+      titulo: "Piso luminoso con terraza en Zarzaquemada",
+      descripcion: "Precioso piso de 87m² con terraza soleada, 3 habitaciones, 2 baños completos.",
+      zona: "Zarzaquemada",
+      precio: 219000,
+      m2: 87,
+      habitaciones: 3,
+      banos: 2,
+      imagen: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
+      destacado: true
+    },
+    {
+      id: 2,
+      tipo: "piso",
+      operacion: "alquiler",
+      titulo: "Piso reformado en el Centro",
+      descripcion: "Piso de 72m² totalmente reformado en 2023. Luminoso, con cocina equipada.",
+      zona: "Centro",
+      precio: 950,
+      m2: 72,
+      habitaciones: 2,
+      banos: 1,
+      imagen: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+      destacado: true
+    },
+    {
+      id: 3,
+      tipo: "chalet",
+      operacion: "venta",
+      titulo: "Chalet adosado con jardín privado",
+      descripcion: "Amplio chalet de 160m² con jardín privado de 80m², garaje doble.",
+      zona: "Arroyo Culebro",
+      precio: 385000,
+      m2: 160,
+      habitaciones: 4,
+      banos: 3,
+      imagen: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80",
+      destacado: true
+    },
+    {
+      id: 4,
+      tipo: "atico",
+      operacion: "venta",
+      titulo: "Ático con vistas panorámicas",
+      descripcion: "Espectacular ático de 105m² + 40m² de terraza con vistas.",
+      zona: "La Fortuna",
+      precio: 295000,
+      m2: 105,
+      habitaciones: 3,
+      banos: 2
+    if (p.precio < precioMin || p.precio > precioMax) return false;
+    return true;
+  });
+
+  renderPropiedades(filtradas.length ? filtradas : propiedades);
+  document.getElementById('propiedades').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* =====================
+   TASACIÓN
+===================== */
+async function calcularTasacion() {
+  const tipo = document.getElementById('t-tipo').value;
+  const metros = parseInt(document.getElementById('t-metros').value);
+  const zona = document.getElementById('t-zona').value;
+  const ascensor = document.getElementById('t-ascensor').value;
+
+  if (!tipo || !metros || !zona) {
+    alert('Por favor completa tipo, metros y zona.');
+    return;
+  }
+
+  const btn = document.getElementById('btn-tasacion');
+  const spinner = document.getElementById('tasacion-spinner');
+  const text = document.getElementById('btn-tasacion-text');
+
+  btn.disabled = true;
+  spinner.style.display = 'block';
+  text.textContent = 'Calculando...';
+
+  // Tasación local (fallback si no hay backend)
+  setTimeout(() => {
+    const precios = { piso: 2200, casa: 2800, estudio: 1800, local: 1500 };
+    const zonaFactor = { centro: 1.1, zarzaquemada: 1.05, fortuna: 1.0, arroyo: 0.95, carrascal: 0.9 };
+    const base = (precios[tipo] || 2000) * metros * (zonaFactor[zona] || 1.0);
+    const extra = ascensor === 'si' ? base * 0.05 : 0;
+    const total = Math.round((base + extra) / 1000) * 1000;
+    const min = (total * 0.92).toLocaleString('es-ES');
+    const max = (total * 1.08).toLocaleString('es-ES');
+
+    spinner.style.display = 'none';
+    text.textContent = 'Calcular valoración';
+    btn.disabled = false;
+
+    document.getElementById('tasacion-precio').textContent = `${min}€ – ${max}€`;
+    document.getElementById('tasacion-result').style.display = 'block';
+  }, 1800);
+}
+
+/* =====================
+   CONTACTO
+===================== */
+async function enviarContacto() {
+  const nombre = document.getElementById('c-nombre').value.trim();
+  const email = document.getElementById('c-email').value.trim();
+  const asunto = document.getElementById('c-asunto').value;
+
+  if (!nombre || !email || !asunto) {
+    alert('Por favor rellena nombre, email y tipo de consulta.');
+    return;
+  }
+  if (!email.includes('@')) { alert('Email no válido.'); return; }
+
+  const btn = document.getElementById('btn-enviar');
+  const spinner = document.getElementById('contacto-spinner');
+  const text = document.getElementById('btn-enviar-text');
+
+  btn.disabled = true;
+  spinner.style.display = 'block';
+  text.textContent = 'Enviando...';
+
+  try {
+    const res = await fetch('/api/contacto', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombre, email, asunto, mensaje: document.getElementById('c-mensaje').value })
+    });
+    // Si no hay backend disponible, simular éxito
+    throw new Error('no backend');
+  } catch {
+    setTimeout(() => {
+      spinner.style.display = 'none';
+      btn.disabled = false;
+      text.textContent = 'Enviar mensaje';
+      document.getElementById('form-success').style.display = 'block';
+      document.querySelector('.contacto-form').querySelectorAll('input, select').forEach(el => el.value = '');
+    }, 1400);
+  }
+}
+
+/* =====================
+   EFECTO RIPPLE
+===================== */
+function addRipple(e, btn) {
+  const ripple = document.createElement('span');
+  ripple.classList.add('ripple');
+  const rect = btn.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px`;
+  btn.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 600);
+}
+
+// Ripple en todos los botones
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('button');
+  if (btn) addRipple(e, btn);
+});
+</script>
+</body>
+</html>

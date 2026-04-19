@@ -2,7 +2,7 @@
 Green House Inmobiliaria – Entry Point Flask
 Ejecutar: python app.py  (dev)  |  gunicorn app:app  (prod)
 """
-
+import os
 from flask import Flask, render_template
 from flask_cors import CORS
 from config import config

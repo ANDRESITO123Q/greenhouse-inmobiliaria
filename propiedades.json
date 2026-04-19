@@ -1,0 +1,52 @@
+{
+  "propiedades": [
+    {
+      "id": 1,
+      "tipo": "piso",
+      "operacion": "venta",
+      "titulo": "Piso luminoso con terraza",
+      "descripcion": "Precioso piso de 87m² con terraza soleada, 3 habitaciones, 2 baños completos y cocina renovada.",
+      "zona": "Zarzaquemada",
+      "precio": 219000,
+      "m2": 87,
+      "habitaciones": 3,
+      "banos": 2,
+      "extras": ["ascensor", "terraza", "garaje_opcional"],
+      "imagen": "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
+      "destacado": true,
+      "ref": "GH-001"
+    },
+    {
+      "id": 2,
+      "tipo": "piso",
+      "operacion": "alquiler",
+      "titulo": "Piso reformado en el Centro",
+      "descripcion": "Piso de 72m² totalmente reformado en 2023. Luminoso, con suelos de tarima.",
+      "zona": "Centro",
+      "precio": 950,
+      "m2": 72,
+      "habitaciones": 2,
+      "banos": 1,
+      "extras": ["ascensor", "amueblado"],
+      "imagen": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+      "destacado": true,
+      "ref": "GH-002"
+    },
+    {
+      "id": 3,
+      "tipo": "chalet",
+      "operacion": "venta",
+      "titulo": "Chalet adosado con jardín",
+      "descripcion": "Amplio chalet de 160m² con jardín privado, garaje doble y trastero.",
+      "zona": "Arroyo Culebro",
+      "precio": 385000,
+      "m2": 160,
+      "habitaciones": 4,
+      "banos": 3,
+      "extras": ["jardin", "garaje", "terraza"],
+      "imagen": "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80",
+      "destacado": true,
+      "ref": "GH-003"
+    }
+  ]
+}

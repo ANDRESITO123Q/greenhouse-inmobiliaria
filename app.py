@@ -6,8 +6,7 @@ Ejecutar: python app.py  (dev)  |  gunicorn app:app  (prod)
 from flask import Flask, render_template
 from flask_cors import CORS
 from config import config
-from routes import propiedades, contacto, tasacion, admin
-import os
+from routes import propiedades, contacto, tasacion
 
 def create_app(env=None):
     app = Flask(__name__)
@@ -24,7 +23,7 @@ def create_app(env=None):
     app.register_blueprint(propiedades.bp)
     app.register_blueprint(contacto.bp)
     app.register_blueprint(tasacion.bp)
-    app.register_blueprint(admin.bp)
+   # app.register_blueprint(admin.bp)
 
     # Rutas de vistas HTML
     @app.route('/')
